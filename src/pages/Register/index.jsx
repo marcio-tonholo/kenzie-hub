@@ -6,9 +6,11 @@ import Select from "../../components/Select";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import api from "../../services";
+import { toast } from "react-toastify";
 
-function Register() {
+function Register({ autenticado }) {
   const history = useHistory();
   const schema = yup.object().shape({
     name: yup.string().required("Campo Obrigatório"),
@@ -21,6 +23,7 @@ function Register() {
       .string()
       .required("Campo Obrigatório")
       .oneOf([yup.ref("password"), null], "Senhas diferentes"),
+    course_module: yup.string().required("Campo obrigatório"),
   });
   const {
     register,
@@ -29,10 +32,28 @@ function Register() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data) => {
-    console.log(data);
-    console.log(errors);
+  const onSubmit = ({ email, password, name, course_module }) => {
+    const user = {
+      email,
+      password,
+      name,
+      bio: " ",
+      contact: " ",
+      course_module,
+    };
+    api
+      .post("/users", user)
+      .then((_) => {
+        toast.success("Conta criada com sucesso!");
+        history.push("/");
+      })
+      .catch((_) => {
+        toast.error("Ops! Algo deu errado");
+      });
   };
+  if (autenticado) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <Container>
       <header>
@@ -74,15 +95,17 @@ function Register() {
         />
         <Select
           register={register}
+          label="Selecionar módulo "
           name="course_module"
+          error={errors.course_module?.message}
           children={[
+            "",
             "Primeiro módulo (Introdução ao Frontend)",
             "Segundo módulo (Frontend Avançado)",
             "Terceiro módulo (Introdução ao Backend)",
             "Quarto módulo (Backend Avançado)",
           ]}
         />
-
         <Button
           children="Cadastrar"
           colorSchema="color-primary-Disable"

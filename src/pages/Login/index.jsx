@@ -7,8 +7,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router-dom";
 import api from "../../services";
+import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
-function Login() {
+function Login({ autenticado, setAutenticado, setUserData }) {
   const history = useHistory();
   const schema = yup.object().shape({
     email: yup.string().required("Campo Obrigatório").email("Email inválido"),
@@ -25,9 +27,25 @@ function Login() {
     resolver: yupResolver(schema),
   });
   const onSubmit = (data) => {
-    console.log(data);
-    console.log(errors);
+    api
+      .post("/sessions", data)
+      .then((response) => {
+        toast.success("Logado com sucesso!");
+        localStorage.setItem("KenzieHub:Token", response.data.token);
+        localStorage.setItem("User:id", response.data.user.id);
+        setAutenticado(true);
+        setUserData(response.data);
+        history.push("/dashboard");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Ops! Algo deu errado");
+      });
   };
+
+  if (autenticado) {
+    return <Redirect to="/dashboard" />;
+  }
   return (
     <Container>
       <header>
@@ -36,12 +54,14 @@ function Login() {
       <InputContanier onSubmit={handleSubmit(onSubmit)}>
         <h1>Login</h1>
         <Input
+          error={errors.email?.message}
           register={register}
           label="Email"
           placeholder="Digite aqui seu email"
           name="email"
         />
         <Input
+          error={errors.password?.message}
           register={register}
           label="Senha"
           placeholder="Digite aqui sua senha"

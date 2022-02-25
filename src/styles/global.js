@@ -18,11 +18,26 @@ export default createGlobalStyle`
     --grey-2: #343B41;
     --grey-3: #212529;
     --grey-4:#121214;
+    --toastify-color-dark: #343B41;
+    --toastify-color-success: #3FE864;
+    --toastify-color-error:#E83F5B;
 }
 body{
     background-color: #000000;
 }
+body::-webkit-scrollbar {
+  width: 12px;               
+}
 
+body::-webkit-scrollbar-track {
+  background: none;        
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color:#212529;  
+  border-radius: 20px;      
+  border: none; 
+}
 h1,h2,h3{
     font-weight: bold;
     font-size:16px;
@@ -40,4 +55,5 @@ p{
     font-size: 12px;
     color: #868E96;
 }
+
 `;

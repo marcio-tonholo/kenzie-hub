@@ -1,4 +1,15 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const Animation = keyframes`
+    from{
+        opacity:0;
+        transform:translatey(-50px)
+    }
+    to{
+        opacity: 1;
+        transform: translatey(0px);
+    }
+`;
 
 export const Container = styled.div`
   height: 100vh;
@@ -6,7 +17,7 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
+  animation: ${Animation} 1s;
   img {
     margin: 35px 0;
   }
@@ -19,7 +30,7 @@ export const InputContanier = styled.form`
   flex-direction: column;
   align-items: center;
   border-radius: 3px;
-  padding: 42px 12px;
+  padding: 30px 12px;
 
   h1 {
     text-align: center;

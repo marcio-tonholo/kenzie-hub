@@ -8,7 +8,7 @@ function Input({ label, register, error, name, ...rest }) {
   return (
     <Container>
       <label htmlFor={name}>
-        {label} {error ? <span>- {error}</span> : ""}
+        {label} {error && <span>- {error}</span>}
       </label>
       <InputContainer tabindex="0">
         <input

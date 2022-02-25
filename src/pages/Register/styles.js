@@ -1,11 +1,22 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const Animation = keyframes`
+    from{
+        opacity:0;
+        transform:translatey(-50px)
+    }
+    to{
+        opacity: 1;
+        transform: translatey(0px);
+    }
+`;
 
 export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
+  animation: ${Animation} 1s;
   header {
     width: 90%;
     display: flex;

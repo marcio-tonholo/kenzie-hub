@@ -1,9 +1,11 @@
 import { Container, InputContainer } from "./styles";
 
-function Select({ children, name, register, label, ...rest }) {
+function Select({ children, name, register, label, error, ...rest }) {
   return (
     <Container>
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name}>
+        {label} {error && <span>- {error}</span>}
+      </label>
       <InputContainer tabindex="0">
         <select {...rest} {...register(name)}>
           {children.map((item, index) => {

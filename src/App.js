@@ -8,6 +8,7 @@ function App() {
     <>
       <GlobalStyle />
       <ToastContainer
+        theme="dark"
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
