@@ -92,7 +92,11 @@ function DashBoard({ autenticado }) {
                   setTecAtual(true);
                 }}
               >
-                <h3>{item.title}</h3>
+                <h3>
+                  {item.title.length > 12
+                    ? item.title.slice(0, 12) + "..."
+                    : item.title}
+                </h3>
                 <p>{item.status}</p>
               </Tecnologias>
             );

@@ -26,7 +26,7 @@ function TecAtualModal({ tecAtual, setTecAtual, itemAtual, loadTechs }) {
       .then((response) => {
         loadTechs();
         setTecAtual(false);
-        toast.success("Tecnologia adicionada com sucesso");
+        toast.success("Tecnologia atualiza com sucesso");
       })
       .catch((err) => toast.error("Ops algo deu errado"));
   };

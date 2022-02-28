@@ -34,12 +34,10 @@ function Login({ autenticado, setAutenticado, setUserData }) {
         localStorage.setItem("KenzieHub:Token", response.data.token);
         localStorage.setItem("User:id", response.data.user.id);
         setAutenticado(true);
-        setUserData(response.data);
         history.push("/dashboard");
       })
       .catch((err) => {
-        console.log(err);
-        toast.error("Ops! Algo deu errado");
+        toast.error("Ops! Login deu errado");
       });
   };
 
